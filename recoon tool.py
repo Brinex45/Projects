@@ -90,7 +90,7 @@ match select:
                 symbols = "@#&*(){}[]/?"
                 all = lower + symbols + numbers + upper
                 password = "".join(random.sample(all, length))
-                print(" GENERATED PASSWORD OF LENGTH", length, " is " r""">>>>-------->""")
+                print(" GENERATED PASSWORD OF LENGTH", length, " is " r""">>>>-------->""", password)
 
 
             get_random_string(length)
@@ -119,42 +119,36 @@ match select:
             print(font("WORDLIST GENERATOR"))
             loading()
             print("GENERATOR PASSWORD IS SAVED IN THE PRESENT FOLDER/DIRECTORY")
-            chrs = raw_input("ENTER THE LETTERS FOR COMBINATION "r""">>>>------>""")
-            l = int(raw_input("MINIMUM LENGTH OF PASSWORD "r""">>>>------------>"""))
-            k = l
-            j = int(raw_input("MAXIMUM LENGTH OF PASSWORD "r""">>>>------------>"""))
-            n = j + 1
+            chrs = input("ENTER THE LETTERS FOR COMBINATION >>>>------>")
+            l = int(input("MINIMUM LENGTH OF PASSWORD >>>>------------>"))
+            j = int(input("MAXIMUM LENGTH OF PASSWORD >>>>------------>"))
             mtl = len(chrs)
             p = []
-            zt = raw_input("[+] ENTER THE NAME OF THE FILE "r""">>>>------------>""")
-            for ltp in range(k, n):
+            zt = input("[+] ENTER THE NAME OF THE FILE >>>>------------>")
+            for ltp in range(l, j + 1):
                 ans = mtl ** ltp
                 p.append(ans)
                 tline = sum(p)
-                raw_input('ARE YOU READY ? [PRESS Enter]')
-                time1 = time.asctime()
+                input('ARE YOU READY ? [PRESS Enter]')
                 start = time.time()
-                psd = open(zt, 'a')
+                with open(zt, 'a') as psd:
+                    for i in range(l, j + 1):
+                        r = i * 100 / j
+                        sys.stdout.write(f"\r{r:.2f}% complete")
+                        sys.stdout.flush()
+                        for xs in itertools.product(chrs, repeat=i):
+                            psd.write(''.join(xs) + '\n')
+                            psd.flush()
 
-                for i in range(k, n):
-                    r = i * 100 / n
-                    l = str(r) + ' percent '
-                    sys.stdout.write("\r%s" % 1)
-                    sys.stdout.flush()
-                    psd.flush()
-
-                    for xs in itertools.product(chrs, repeat=i):
-                        psd.write(''.join(xs) + '\n')
-                        psd.flush()
-
-                psd.close()
-                sys.stdout.write("\Done Success ")
+                print("\nDone Success")
                 end = time.time()
-                '\t [+] Process Completed                :    ', time.asctime()
+                print(f'\t [+] Process Completed at: {time.asctime()}')
                 totaltime = end - start
                 rate = tline / totaltime
+                print(f'Total Time: {totaltime:.2f} seconds')
+                print(f'Rate: {rate:.2f} passwords/second')
 
-                raw_input("Press Enter to exit")
+            input("Press Enter to exit")
 
     case 4:
 
@@ -278,21 +272,26 @@ match select:
             window_size(80, 20)
             print(font("SUBDOMAIN SCANNER"))
             loading()
-            print(" IT TAKES TIME ACCORDING TO THE DOMAIN")
-            print(" Using defaukt added wordlist with 649649 word")
-            domain = input("Enter the domain to scan"r">>>>--------->""")
-            file = open("subdomain.txt")
-            content = file.read()
-            subdomains = content.splitlines()
+            print("IT TAKES TIME ACCORDING TO THE DOMAIN")
+            print("Using default added wordlist with 649649 words")
+
+            domain = input("Enter the domain to scan >>>>--------->")
+            try:
+                with open("subdomain.txt") as file:
+                    subdomains = file.read().splitlines()
+            except FileNotFoundError:
+                print("[x] Wordlist file 'subdomain.txt' not found.")
+                exit()
+
             for subdomain in subdomains:
                 url = f"http://{subdomain}.{domain}"
                 try:
                     requests.get(url)
-                    print("[+]Discoverd subdomain:", url)
+                    print("[+] Discovered subdomain:", url)
                 except requests.ConnectionError:
-                    print("[x]Subdomain not found", url)
+                    pass  # Subdomain not found, simply pass
 
-            raw_input("PRESS ENTER TO EXIT")
+            input("PRESS ENTER TO EXIT")
 
     case 8:
         def loading():
